@@ -7,4 +7,10 @@ class Verification::Sms
   def send_sms
     ToledoSMSApi.new.sms_deliver(user.unconfirmed_phone, user.sms_confirmation_code)
   end
+
+  # Normalize phone-number with international prefix (only spain)
+  def phone
+    return unless @phone
+    PhonyRails.normalize_number(@phone.gsub('+',''), default_country_code: 'ES',  strict: true)
+  end
 end

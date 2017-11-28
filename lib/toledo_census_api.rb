@@ -53,6 +53,10 @@ class ToledoCensusApi < CensusApi
       @census_response['Barrio_id']
     end
 
+    def document_number
+      @census_response['DNI']
+    end
+
   end
 
   def get_response_body(document_type, document_number)
@@ -92,7 +96,7 @@ class ToledoCensusApi < CensusApi
 
   def stubbed_response(document_type, document_number)
 
-    if document_number == "12345678Z" && document_type == "1"
+    if ( document_number == "12345678" || document_number == "12345678Z") && document_type == "1"
       stubbed_valid_response
     else
       stubbed_invalid_response
@@ -102,7 +106,7 @@ class ToledoCensusApi < CensusApi
   def stubbed_valid_response
     {
       'IDHAB' => '111111',
-      'DNI' => '12345678Z',
+      'DNI' => '12345678',
       'Nombre' => 'Doménikos',
       'PrimerApellido' => 'Theotokópoulo',
       'SegundoApellido' => 'ElGreco',

@@ -32,7 +32,7 @@ class Verification::Residence
 
     user.take_votes_if_erased_document(document_number, document_type)
 
-    user.update(document_number:       document_number,
+    user.update(document_number:       normalized_document_number,
                 document_type:         document_type,
                 geozone:               geozone,
                 date_of_birth:         date_of_birth.to_datetime,
@@ -46,7 +46,8 @@ class Verification::Residence
   end
 
   def document_number_uniqueness
-    errors.add(:document_number, I18n.t('errors.messages.taken')) if User.active.where(document_number: document_number).any?
+    return unless normalized_document_number
+    errors.add(:document_number, I18n.t('errors.messages.taken')) if User.active.where(document_number: normalized_document_number).any?
   end
 
   def store_failed_attempt
@@ -61,6 +62,10 @@ class Verification::Residence
 
   def geozone
     Geozone.where(census_code: district_code).first
+  end
+
+  def normalized_document_number
+    @census_data.document_number
   end
 
   def district_code
