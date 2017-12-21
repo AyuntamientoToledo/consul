@@ -1,6 +1,16 @@
 es:
+  legislation:
+    processes:
+      index:
+        section_header:
+          icon_alt: Icono de Procesos legislativos (consultas ciudadanas)
+          title: Consultas ciudadanas
+          help: Ayuda sobre procesos legislativos (consultas ciudadanas)
+        section_footer:
+          title: Ayuda sobre procesos legislativos (consultas ciudadanas)
   layouts:
     header:
+      collaborative_legislation: Consultas ciudadanas
       open_city_title: Decide tu ciudad
       open_city_slogan_html: Existen ciudades gobernadas directamente por sus habitantes, en las que la ciudadanía puede <strong>proponer, debatir y decidir</strong> sobre los asuntos que les importan. Con sus ideas contribuyen a mejorar sus vidas y las de los demás. <strong>Toledo ya es una de ellas</strong>.
       collaborative_legislation: Consultas Ciudadanas
