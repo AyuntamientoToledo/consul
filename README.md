@@ -1,4 +1,5 @@
-![Logo of CONSUL](https://raw.githubusercontent.com/AyuntamientoToledo/consul/master/public/consul_toledo_participa.png)
+![CONSUL logo](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
+>>>>>>> 0a5b6366a8234f542266bcbf41b5af5b13ecaf41
 
 ![Logo of Ayto. Toledo](https://raw.githubusercontent.com/AyuntamientoToledo/consul/master/public/logo_ayto_toledo.png)
 
@@ -14,6 +15,4 @@ This fork is maintained by [Strings Digital Products](https://www.wearestrings.c
 
 *This repo is a fork from [Consul](https://github.com/consul/consul/)*. Do not use it to start your own fork. For more information about creating your own fork, checkout the official repo page [Consul](https://github.com/consul/consul/).
 
-
 SDP
-
