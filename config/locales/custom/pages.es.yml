@@ -8,4 +8,4 @@ es:
         feature_1: "Para crear un debate simplemente tienes que %{link}"
       proposals:
         feature_1: "Para crear una propuesta tienes que estar %{link}, además para apoyarlas debes verificar tu cuenta."
-        feature_2_html: "Las propuestas que consigan <strong>el apoyo del 0.5% de la gente</strong> (mayor de 16 años empadronada en Toledo) pasan a votación."
+        feature_2_html: "Las propuestas que consigan <strong>el apoyo del %{population_percent_for_proposal_success}% de la gente</strong> (mayor de 16 años empadronada en Toledo) pasan a votación."
