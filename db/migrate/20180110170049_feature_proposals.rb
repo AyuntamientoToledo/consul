@@ -4,6 +4,6 @@ class FeatureProposals < ActiveRecord::Migration
   end
 
   def down
-    Setting.['feature.proposals'].destroy
+    Setting['feature.proposals'].destroy
   end
 end

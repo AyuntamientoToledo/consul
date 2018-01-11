@@ -4,6 +4,6 @@ class FeatureAllowImages < ActiveRecord::Migration
   end
 
   def down
-    Setting.['feature.allow_images'].destroy
+    Setting['feature.allow_images'].destroy
   end
 end
