@@ -27,3 +27,9 @@ es:
   verification:
     sms:
       message_payload: "La clave para verificarte en Toledo Participa es: %{code}."
+  settings:
+    population_percent_for_proposal_success: 'Tanto por ciento de población para aprobar una propuesta'
+  polls:
+    index:
+      section_footer:
+        help_text_1: "Las votaciones se convocan cuando una propuesta ciudadana alcanza el %{setting_population_percent_for_proposal_success}% de apoyos del censo con derecho a voto. En las votaciones también se pueden incluir cuestiones que el Ayuntamiento somete a decisión directa de la ciudadanía."
