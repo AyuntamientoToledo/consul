@@ -46,7 +46,7 @@ class Verification::Residence
   end
 
   def document_number_uniqueness
-    return unless normalized_document_number
+    return errors.add(:residence_in_toledo, false) unless normalized_document_number
     errors.add(:document_number, I18n.t('errors.messages.taken')) if User.active.where(document_number: normalized_document_number).any?
   end
 
@@ -65,7 +65,7 @@ class Verification::Residence
   end
 
   def normalized_document_number
-    @census_data.document_number
+    @census_data.try :document_number
   end
 
   def district_code
