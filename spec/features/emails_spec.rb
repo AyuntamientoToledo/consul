@@ -366,7 +366,7 @@ feature 'Emails' do
       login_as(author)
       visit new_budget_investment_path(budget_id: budget.id)
 
-      select  "#{group.name}: #{heading.name}", from: 'budget_investment_heading_id'
+      select  heading.name, from: 'budget_investment_heading_id'
       fill_in 'budget_investment_title', with: 'Build a hospital'
       fill_in 'budget_investment_description', with: 'We have lots of people that require medical attention'
       check   'budget_investment_terms_of_service'
@@ -396,7 +396,7 @@ feature 'Emails' do
 
       choose 'budget_investment_feasibility_unfeasible'
       fill_in 'budget_investment_unfeasibility_explanation', with: 'This is not legal as stated in Article 34.9'
-      check 'budget_investment_valuation_finished'
+      find_field('budget_investment[valuation_finished]').click
       click_button 'Save changes'
 
       expect(page).to have_content "Dossier updated"
@@ -492,11 +492,15 @@ feature 'Emails' do
   end
 
   context "Users without email" do
-    scenario "should not receive emails", :js do
+    scenario "should not receive emails" do
       user = create(:user, :verified, email_on_comment: true)
       proposal = create(:proposal, author: user)
+
+      user_commenting = create(:user)
+      comment = create(:comment, commentable: proposal, user: user_commenting)
       user.update(email: nil)
-      comment_on(proposal)
+
+      Mailer.comment(comment).deliver_now
 
       expect { open_last_email }.to raise_error "No email has been sent!"
     end

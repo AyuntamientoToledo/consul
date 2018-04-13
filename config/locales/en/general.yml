@@ -177,6 +177,7 @@ en:
     proposal_notification: "Notification"
     spending_proposal: Spending proposal
     budget/investment: Investment
+    budget/heading: Budget Heading
     poll/shift: Shift
     poll/question/answer: Answer
     user: Account
@@ -230,7 +231,7 @@ en:
       moderation: Moderation
       valuation: Valuation
       officing: Polling officers
-      more_info: More information
+      help: Help
       my_account_link: My account
       my_activity_link: My activity
       notifications: Notifications
@@ -622,6 +623,7 @@ en:
       previous_slide: Previous Slide
       next_slide: Next Slide
     documentation: Additional documentation
+    more_info: More information
   social:
     blog: "%{org} Blog"
     facebook: "%{org} Facebook"
@@ -764,11 +766,11 @@ en:
       not_voting_allowed: Voting phase is closed
     budget_investments:
       not_logged_in: You must %{signin} or %{signup} to continue.
-      not_verified: Only verified users can vote on proposals; %{verify_account}.
+      not_verified: Only verified users can vote on investment projects; %{verify_account}.
       organization: Organizations are not permitted to vote
       unfeasible: Unfeasible investment projects can not be supported
       not_voting_allowed: Voting phase is closed
-      different_heading_assigned: You can only support proposals in one district
+      different_heading_assigned: You can only support investment projects in one heading
   welcome:
     debates:
       description: For meeting, discussing and sharing the things that matter to us in our city.
@@ -819,6 +821,7 @@ en:
     help: "You can add links of %{models} inside of %{org}."
     submit: "Add"
     error: "Link not valid. Remember to start with %{url}."
+    error_itself: "Link not valid. You cannot relate a content to itself."
     success: "You added a new related content"
     is_related: "¿Is it related content?"
     score_positive: "Yes"
@@ -826,3 +829,4 @@ en:
     content_title:
       proposal: "Proposal"
       debate: "Debate"
+      budget_investment: "Budget investment"

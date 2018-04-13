@@ -220,20 +220,26 @@ FactoryBot.define do
   end
 
   factory :budget do
-    sequence(:name) { |n| "Budget #{n}" }
+    sequence(:name) { |n| "#{Faker::Lorem.word} #{n}" }
     currency_symbol "€"
     phase 'accepting'
     description_drafting  "This budget is drafting"
+    description_informing "This budget is informing"
     description_accepting "This budget is accepting"
     description_reviewing "This budget is reviewing"
     description_selecting "This budget is selecting"
     description_valuating "This budget is valuating"
+    description_publishing_prices "This budget is publishing prices"
     description_balloting "This budget is balloting"
     description_reviewing_ballots "This budget is reviewing ballots"
     description_finished "This budget is finished"
 
     trait :drafting do
       phase 'drafting'
+    end
+
+    trait :informing do
+      phase 'informing'
     end
 
     trait :accepting do
@@ -252,6 +258,10 @@ FactoryBot.define do
       phase 'valuating'
     end
 
+    trait :publishing_prices do
+      phase 'publishing_prices'
+    end
+
     trait :balloting do
       phase 'balloting'
     end
@@ -268,6 +278,10 @@ FactoryBot.define do
   factory :budget_group, class: 'Budget::Group' do
     budget
     sequence(:name) { |n| "Group #{n}" }
+
+    trait :drafting_budget do
+      association :budget, factory: [:budget, :drafting]
+    end
   end
 
   factory :budget_heading, class: 'Budget::Heading' do
@@ -275,6 +289,10 @@ FactoryBot.define do
     sequence(:name) { |n| "Heading #{n}" }
     price 1000000
     population 1234
+
+    trait :drafting_budget do
+      association :group, factory: [:budget_group, :drafting_budget]
+    end
   end
 
   factory :budget_investment, class: 'Budget::Investment' do
@@ -313,7 +331,6 @@ FactoryBot.define do
       selected true
       feasibility "feasible"
       valuation_finished true
-
     end
 
     trait :winner do
@@ -326,12 +343,27 @@ FactoryBot.define do
       incompatible true
     end
 
+    trait :selected_with_price do
+      selected
+      price 1000
+      price_explanation 'Because of reasons'
+    end
+
     trait :unselected do
       selected false
       feasibility "feasible"
       valuation_finished true
     end
+  end
 
+  factory :budget_phase, class: 'Budget::Phase' do
+    budget
+    kind        :balloting
+    summary     Faker::Lorem.sentence(3)
+    description Faker::Lorem.sentence(10)
+    starts_at   Date.yesterday
+    ends_at     Date.tomorrow
+    enabled     true
   end
 
   factory :image do
@@ -368,7 +400,7 @@ FactoryBot.define do
     association :investment, factory: :budget_investment
     sequence(:title)     { |n| "Budget investment milestone #{n} title" }
     description          'Milestone description'
-    publication_date     Time.zone.today
+    publication_date     Date.current
   end
 
   factory :vote do
@@ -440,6 +472,16 @@ FactoryBot.define do
 
     trait :with_confidence_score do
       before(:save) { |d| d.calculate_confidence_score }
+    end
+
+    trait :valuation do
+      valuation true
+      association :commentable, factory: :budget_investment
+      before :create do |valuation|
+        valuator = create(:valuator)
+        valuation.author = valuator.user
+        valuation.commentable.valuators << valuator
+      end
     end
   end
 

@@ -5,10 +5,143 @@ feature 'Budgets' do
   let(:budget) { create(:budget) }
   let(:level_two_user) { create(:user, :level_two) }
 
-  scenario 'Index' do
-    budgets = create_list(:budget, 3)
+  context 'Index' do
+
+    scenario 'Show normal index with links' do
+      group1 = create(:budget_group, budget: budget)
+      group2 = create(:budget_group, budget: budget)
+      heading1 = create(:budget_heading, group: group1)
+      heading2 = create(:budget_heading, group: group2)
+
+      budget.update_attributes(phase: 'informing')
+
+      visit budgets_path
+
+      within("#budget_heading") do
+        expect(page).to have_content(budget.name)
+        expect(page).to have_content(budget.description)
+        expect(page).to have_content('Actual phase')
+        expect(page).to have_content('Informing')
+        expect(page).to have_link('Help with participatory budgets')
+        expect(page).to have_link('See all phases')
+      end
+
+      budget.update_attributes(phase: 'publishing_prices')
+      visit budgets_path
+
+      within("#budget_heading") do
+        expect(page).to have_content('Publishing projects prices')
+      end
+
+      within('#budget_info') do
+        expect(page).to have_content(group1.name)
+        expect(page).to have_content(group2.name)
+        expect(page).to have_content(heading1.name)
+        expect(page).to have_content(budget.formatted_heading_price(heading1))
+        expect(page).to have_content(heading2.name)
+        expect(page).to have_content(budget.formatted_heading_price(heading2))
+      end
+
+      expect(page).not_to have_content("#finished_budgets")
+    end
+
+    scenario 'Show finished budgets list' do
+      finished_budget_1 = create(:budget, :finished)
+      finished_budget_2 = create(:budget, :finished)
+      drafting_budget = create(:budget, :drafting)
+      visit budgets_path
+
+      within("#finished_budgets") do
+        expect(page).to     have_content(finished_budget_1.name)
+        expect(page).to     have_content(finished_budget_2.name)
+        expect(page).not_to have_content(budget.name)
+        expect(page).not_to have_content(drafting_budget.name)
+      end
+    end
+
+    scenario 'Show informing index without links' do
+      budget.update_attributes(phase: 'informing')
+      group = create(:budget_group, budget: budget)
+      heading = create(:budget_heading, group: group, name: 'Health')
+
+      visit budgets_path
+
+      within('#budget_info') do
+        expect(page).not_to have_link("Health €1,000,000")
+        expect(page).to     have_content("Health €1,000,000")
+
+        expect(page).not_to have_link("List of all investment projects")
+        expect(page).not_to have_link("List of all unfeasible investment projects")
+        expect(page).not_to have_link("List of all investment projects not selected for balloting")
+
+        expect(page).not_to have_css('div#map')
+      end
+    end
+  end
+
+  scenario 'Index shows only published phases' do
+
+    budget.update(phase: :finished)
+    phases = budget.phases
+    phases.drafting.update(starts_at: '30-12-2017', ends_at: '31-12-2017', enabled: true,
+                           description: 'Description of drafting phase',
+                           summary: '<p>This is the summary for drafting phase</p>')
+
+    phases.accepting.update(starts_at: '01-01-2018', ends_at: '10-01-2018', enabled: true,
+                            description: 'Description of accepting phase',
+                            summary: 'This is the summary for accepting phase')
+
+    phases.reviewing.update(starts_at: '11-01-2018', ends_at: '20-01-2018', enabled: false,
+                            description: 'Description of reviewing phase',
+                            summary: 'This is the summary for reviewing phase')
+
+    phases.selecting.update(starts_at: '21-01-2018', ends_at: '01-02-2018', enabled: true,
+                            description: 'Description of selecting phase',
+                            summary: 'This is the summary for selecting phase')
+
+    phases.valuating.update(starts_at: '10-02-2018', ends_at: '20-02-2018', enabled: false,
+                            description: 'Description of valuating phase',
+                            summary: 'This is the summary for valuating phase')
+
+    phases.publishing_prices.update(starts_at: '21-02-2018', ends_at: '01-03-2018', enabled: false,
+                                    description: 'Description of publishing prices phase',
+                                    summary: 'This is the summary for publishing_prices phase')
+
+    phases.balloting.update(starts_at: '02-03-2018', ends_at: '10-03-2018', enabled: true,
+                            description: 'Description of balloting phase',
+                            summary: 'This is the summary for balloting phase')
+
+    phases.reviewing_ballots.update(starts_at: '11-03-2018', ends_at: '20-03-2018', enabled: false,
+                                    description: 'Description of reviewing ballots phase',
+                                    summary: 'This is the summary for reviewing_ballots phase')
+
+    phases.finished.update(starts_at: '21-03-2018', ends_at: '30-03-2018', enabled: true,
+                           description: 'Description of finished phase',
+                           summary: 'This is the summary for finished phase')
+
     visit budgets_path
-    budgets.each {|budget| expect(page).to have_link(budget.name)}
+
+    expect(page).not_to have_content "This is the summary for drafting phase"
+    expect(page).not_to have_content "December 30, 2017 - December 31, 2017"
+    expect(page).not_to have_content "This is the summary for reviewing phase"
+    expect(page).not_to have_content "January 11, 2018 - January 20, 2018"
+    expect(page).not_to have_content "This is the summary for valuating phase"
+    expect(page).not_to have_content "February 10, 2018 - February 20, 2018"
+    expect(page).not_to have_content "This is the summary for publishing_prices phase"
+    expect(page).not_to have_content "February 21, 2018 - March 01, 2018"
+    expect(page).not_to have_content "This is the summary for reviewing_ballots phase"
+    expect(page).not_to have_content "March 11, 2018 - March 20, 2018'"
+
+    expect(page).to have_content "This is the summary for accepting phase"
+    expect(page).to have_content "January 01, 2018 - January 20, 2018"
+    expect(page).to have_content "This is the summary for selecting phase"
+    expect(page).to have_content "January 21, 2018 - March 01, 2018"
+    expect(page).to have_content "This is the summary for balloting phase"
+    expect(page).to have_content "March 02, 2018 - March 20, 2018"
+    expect(page).to have_content "This is the summary for finished phase"
+    expect(page).to have_content "March 21, 2018 - March 29, 2018"
+
+    expect(page).to have_css(".phase.active", count: 1)
   end
 
   context 'Show' do
@@ -70,27 +203,14 @@ feature 'Budgets' do
     background do
       logout
       budget.update(phase: 'drafting')
+      create(:budget)
     end
 
     context "Listed" do
-      scenario "Not listed to guest users at the public budgets list" do
+      scenario "Not listed at public budgets list" do
         visit budgets_path
 
         expect(page).not_to have_content(budget.name)
-      end
-
-      scenario "Not listed to logged users at the public budgets list" do
-        login_as(level_two_user)
-        visit budgets_path
-
-        expect(page).not_to have_content(budget.name)
-      end
-
-      scenario "Is listed to admins at the public budgets list" do
-        login_as(admin)
-        visit budgets_path
-
-        expect(page).to have_content(budget.name)
       end
     end
 
@@ -127,8 +247,8 @@ feature 'Budgets' do
         login_as(level_two_user)
 
         visit budget_path(budget)
+        expect(page).to have_link "Create a budget investment"
 
-        expect(page).to have_link "Create budget investment"
       end
 
       scenario "Unverified user" do
@@ -143,7 +263,7 @@ feature 'Budgets' do
       scenario "user not logged in" do
         visit budget_path(budget)
 
-        expect(page).to have_content "To create a new budget investment you must sign in or sign up."
+        expect(page).to have_content "To create a new budget investment you must sign in or sign up"
       end
 
     end

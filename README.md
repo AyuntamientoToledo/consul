@@ -1,12 +1,9 @@
-![CONSUL logo](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
->>>>>>> 0a5b6366a8234f542266bcbf41b5af5b13ecaf41
-
 ![Logo of Ayto. Toledo](https://raw.githubusercontent.com/AyuntamientoToledo/consul/master/public/logo_ayto_toledo.png)
 
 # TOLEDO PARTICIPA - CONSUL
 
-Citizen Participation and Open Government Application *fork for Ciudad de Toledo*
 
+Citizen Participation and Open Government Application *fork for Ciudad de Toledo*
 
 This fork is maintained by [Strings Digital Products](https://www.wearestrings.com)
 

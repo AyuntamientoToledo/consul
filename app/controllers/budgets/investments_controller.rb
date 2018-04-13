@@ -41,6 +41,7 @@ module Budgets
     def show
       @commentable = @investment
       @comment_tree = CommentTree.new(@commentable, params[:page], @current_order)
+      @related_contents = Kaminari.paginate_array(@investment.relationed_contents).page(params[:page]).per(5)
       set_comment_flags(@comment_tree.comments)
       load_investment_votes(@investment)
       @investment_ids = [@investment.id]
@@ -94,7 +95,7 @@ module Budgets
 
       def set_random_seed
         if params[:order] == 'random' || params[:order].blank?
-          seed = rand(-100..100) / 100.0
+          seed = params[:random_seed] || session[:random_seed] || rand(-100000..100000)
           params[:random_seed] ||= Float(seed) rescue 0
         else
           params[:random_seed] = nil
