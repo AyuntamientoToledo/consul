@@ -105,6 +105,10 @@ class Budget < ActiveRecord::Base
     Budget::Phase::PUBLISHED_PRICES_PHASES.include?(phase)
   end
 
+  def valuating_or_later?
+    valuating? || publishing_prices? || balloting_or_later?
+  end
+
   def balloting_process?
     balloting? || reviewing_ballots?
   end
@@ -124,7 +128,7 @@ class Budget < ActiveRecord::Base
   def formatted_amount(amount)
     ActionController::Base.helpers.number_to_currency(amount,
                                                       precision: 0,
-                                                      locale: I18n.default_locale,
+                                                      locale: I18n.locale,
                                                       unit: currency_symbol)
   end
 
@@ -148,15 +152,19 @@ class Budget < ActiveRecord::Base
   end
 
   def email_selected
-    investments.selected.each do |investment|
+    investments.selected.order(:id).each do |investment|
       Mailer.budget_investment_selected(investment).deliver_later
     end
   end
 
   def email_unselected
-    investments.unselected.each do |investment|
+    investments.unselected.order(:id).each do |investment|
       Mailer.budget_investment_unselected(investment).deliver_later
     end
+  end
+
+  def has_winning_investments?
+    investments.winners.any?
   end
 
   private
