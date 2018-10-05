@@ -20,6 +20,9 @@ es:
       email_on_direct_message_label: Recibir emails con mensajes privados
       email_digest_label: Recibir resumen de notificaciones sobre propuestas
       official_position_badge_label: Mostrar etiqueta de tipo de usuario
+      recommendations: Recomendaciones
+      show_debates_recommendations: Mostrar recomendaciones en el listado de debates
+      show_proposals_recommendations: Mostrar recomendaciones en el listado de propuestas
       title: Mi cuenta
       user_permission_debates: Participar en debates
       user_permission_info: Con tu cuenta ya puedes...
@@ -110,6 +113,10 @@ es:
       recommendations:
         without_results: No existen debates relacionados con tus intereses
         without_interests: Sigue propuestas para que podamos darte recomendaciones
+        disable: "Si ocultas las recomendaciones para debates, no se volverán a mostrar. Puedes volver a activarlas en 'Mi cuenta'"
+        actions:
+          success: "Las recomendaciones de debates han sido desactivadas"
+          error: "Ha ocurrido un error. Por favor dirígete al apartado 'Mi cuenta' para desactivar las recomendaciones manualmente"
       search_form:
         button: Buscar
         placeholder: Buscar debates...
@@ -234,19 +241,18 @@ es:
       help: Ayuda
       my_account_link: Mi cuenta
       my_activity_link: Mi actividad
-      notifications: Notificaciones
-      new_notifications:
-        one: Tienes una nueva notificación
-        other: Tienes %{count} notificaciones nuevas
-      no_notifications: "No tienes notificaciones nuevas"
       open: abierto
-      open_city_slogan_html: Existen ciudades gobernadas directamente por sus habitantes, que <strong>debaten</strong> sobre temas que les preocupan, <strong>proponen</strong> ideas para mejorar sus vidas y <strong>deciden</strong> entre todas y todos las que se llevan a cabo.
-      open_city_title: La ciudad que quieres será la ciudad que quieras
       open_gov: Gobierno %{open}
       proposals: Propuestas
       poll_questions: Votaciones
       budgets: Presupuestos participativos
       spending_proposals: Propuestas de inversión
+      notification_item:
+        new_notifications:
+          one: Tienes una nueva notificación
+          other: Tienes %{count} notificaciones nuevas
+        notifications: Notificaciones
+        no_notifications: "No tienes notificaciones nuevas"
     admin:
       watch_form_message: 'Has realizado cambios que no han sido guardados. ¿Seguro que quieres abandonar la página?'
   legacy_legislation:
@@ -259,19 +265,25 @@ es:
   locale: Español
   notifications:
     index:
-      comments_on:
-        one: Hay un nuevo comentario en
-        other: Hay %{count} comentarios nuevos en
       empty_notifications: No tienes notificaciones nuevas.
-      notifiable_hidden: Este elemento ya no está disponible.
       mark_all_as_read: Marcar todas como leídas
-      proposal_notification:
-        one: Hay una nueva notificación en
-        other: Hay %{count} nuevas notificaciones en
-      replies_to:
-        one: Hay una respuesta nueva a tu comentario en
-        other: Hay %{count} nuevas respuestas a tu comentario en
+      read: Leídas
       title: Notificaciones
+      unread: Nuevas
+    notification:
+      action:
+        comments_on:
+          one: Hay un nuevo comentario en
+          other: Hay %{count} comentarios nuevos en
+        proposal_notification:
+          one: Hay una nueva notificación en
+          other: Hay %{count} nuevas notificaciones en
+        replies_to:
+          one: Hay una respuesta nueva a tu comentario en
+          other: Hay %{count} nuevas respuestas a tu comentario en
+      mark_as_read: Marcar como leída
+      mark_as_unread: Marcar como no leída
+      notifiable_hidden: Este elemento ya no está disponible.
   map:
     title: "Distritos"
     proposal_for_district: "Crea una propuesta para tu distrito"
@@ -356,6 +368,10 @@ es:
       recommendations:
         without_results: No existen propuestas relacionadas con tus intereses
         without_interests: Sigue propuestas para que podamos darte recomendaciones
+        disable: "Si ocultas las recomendaciones para propuestas, no se volverán a mostrar. Puedes volver a activarlas en 'Mi cuenta'"
+        actions:
+          success: "Las recomendaciones de propuestas han sido desactivadas"
+          error: "Ha ocurrido un error. Por favor dirígete al apartado 'Mi cuenta' para desactivar las recomendaciones manualmente"
       retired_proposals: Propuestas retiradas
       retired_proposals_link: "Propuestas retiradas por sus autores"
       retired_links:
@@ -375,7 +391,7 @@ es:
       select_order: Ordenar por
       select_order_long: 'Estas viendo las propuestas'
       start_proposal: Crea una propuesta
-      title: Propuestas ciudadanas
+      title: Propuestas
       top: Top semanal
       top_link_proposals: Propuestas más apoyadas por categoría
       section_header:
@@ -480,6 +496,7 @@ es:
         description: Regístrate para poder votar propuestas ciudadanas y las cuestiones que pregunta a sus vecinos el Ayuntamiento. Toma decisiones municipales de forma directa.
         help_text_1: "Las votaciones se convocan cuando una propuesta ciudadana alcanza el 1% de apoyos del censo con derecho a voto. En las votaciones también se pueden incluir cuestiones que el Ayuntamiento somete a decisión directa de la ciudadanía."
         help_text_2: "Para participar en la próxima votación tienes que registrarte en %{org} y verificar tu cuenta. Pueden votar todas las personas empadronadas en la ciudad mayores de 16 años. Los resultados de todas las votaciones serán vinculantes para el gobierno."
+      no_polls: "No hay votaciones abiertas."
     show:
       already_voted_in_booth: "Ya has participado en esta votación en urnas presenciales, no puedes volver a participar."
       already_voted_in_web: "Ya has participado en esta votación. Si vuelves a votar se sobreescribirá tu resultado anterior."
@@ -499,7 +516,6 @@ es:
       zoom_plus: Ampliar imagen
       read_more: "Leer más sobre %{answer}"
       read_less: "Leer menos sobre %{answer}"
-      participate_in_other_polls: Participar en otras votaciones
       videos: "Vídeo externo"
       info_menu: "Información"
       stats_menu: "Estadísticas de participación"
@@ -622,7 +638,14 @@ es:
       previous_slide: Imagen anterior
       next_slide: Siguiente imagen
     documentation: Documentación adicional
-    more_info: Más información
+    view_mode:
+      title: Modo de vista
+      cards: Tarjetas
+      list: Lista
+    recommended_index:
+        title: Recomendaciones
+        see_more: Ver más recomendaciones
+        hide: Ocultar recomendaciones
   social:
     blog: "Blog de %{org}"
     facebook: "Facebook de %{org}"
@@ -740,6 +763,7 @@ es:
       no_private_messages: "Este usuario no acepta mensajes privados."
       private_activity: Este usuario ha decidido mantener en privado su lista de actividades.
       send_private_message: "Enviar un mensaje privado"
+      delete_alert: "¿Estás seguro de que deseas borrar tu proyecto de gasto? Esta acción no se puede deshacer"
     proposals:
       send_notification: "Enviar notificación"
       retire: "Retirar"
@@ -769,22 +793,25 @@ es:
       organization: Las organizaciones no pueden votar.
       unfeasible: No se pueden votar propuestas inviables.
       not_voting_allowed: El periodo de votación está cerrado.
-      different_heading_assigned: Sólo puedes apoyar proyectos de gasto de una partida
+      different_heading_assigned:
+        one: "Sólo puedes apoyar proyectos de gasto de %{count} distrito"
+        other: "Sólo puedes apoyar proyectos de gasto de %{count} distritos"
   welcome:
-    debates:
-      description: Encontrarnos, debatir y compartir lo que nos parece importante en nuestra ciudad.
-      title: Debates
-    decide:
-      description: La ciudadanía decide si acepta o rechaza las propuestas más apoyadas.
-      title: Decides
-    do:
-      description: Si la propuesta es aceptada mayoritariamente, el Ayuntamiento la asume como propia y se hace.
-      title: Se hace
-    proposal:
-      description: Espacio abierto para propuestas ciudadanas sobre el tipo de ciudad en el que queremos vivir.
-      title: Propones
+    feed:
+      most_active:
+        debates: "Debates más activos"
+        proposals: "Propuestas más activas"
+        processes: "Procesos abiertos"
+      see_all_debates: Ver todos los debates
+      see_all_proposals: Ver todas las propuestas
+      see_all_processes: Ver todos los procesos
+      process_label: Proceso
+      see_process: Ver proceso
+    cards:
+      title: Destacados
     recommended:
       title: Recomendaciones que te pueden interesar
+      help: "Estas recomendaciones se generan por las etiquetas de los debates y propuestas que estás siguiendo."
       debates:
         title: Debates recomendados
         btn_text_link: Todos los debates recomendados
@@ -793,6 +820,7 @@ es:
         btn_text_link: Todas las propuestas recomendadas
       budget_investments:
         title: Presupuestos recomendados
+      slide: "Ver %{title}"
     verification:
       i_dont_have_an_account: No tengo cuenta, quiero crear una y verificarla
       i_have_an_account: Ya tengo una cuenta que quiero verificar
@@ -829,3 +857,13 @@ es:
       proposal: "Propuesta"
       debate: "Debate"
       budget_investment: "Proyecto de gasto"
+  admin/widget:
+    header:
+      title: Administración
+  annotator:
+    help:
+      alt: Selecciona el texto que quieres comentar y pulsa en el botón con el lápiz.
+      text: Para comentar este documento debes %{sign_in} o %{sign_up}. Después selecciona el texto que quieres comentar y pulsa en el botón con el lápiz.
+      text_sign_in: iniciar sesión
+      text_sign_up: registrarte
+      title: "¿Cómo puedo comentar este documento?"

@@ -1,7 +1,9 @@
 class Admin::BudgetInvestmentMilestonesController < Admin::BaseController
+  include Translatable
 
   before_action :load_budget_investment, only: [:index, :new, :create, :edit, :update, :destroy]
   before_action :load_budget_investment_milestone, only: [:edit, :update, :destroy]
+  before_action :load_statuses, only: [:index, :new, :create, :edit, :update]
 
   def index
   end
@@ -42,10 +44,12 @@ class Admin::BudgetInvestmentMilestonesController < Admin::BaseController
   private
 
   def milestone_params
-    params.require(:budget_investment_milestone)
-          .permit(:title, :description, :publication_date, :budget_investment_id,
-                  image_attributes: [:id, :title, :attachment, :cached_attachment, :user_id, :_destroy],
-                  documents_attributes: [:id, :title, :attachment, :cached_attachment, :user_id, :_destroy])
+    image_attributes = [:id, :title, :attachment, :cached_attachment, :user_id, :_destroy]
+    documents_attributes = [:id, :title, :attachment, :cached_attachment, :user_id, :_destroy]
+    attributes = [:title, :description, :publication_date, :budget_investment_id, :status_id,
+                  image_attributes: image_attributes, documents_attributes: documents_attributes]
+
+    params.require(:budget_investment_milestone).permit(*attributes, translation_params(params[:budget_investment_milestone]))
   end
 
   def load_budget_investment
@@ -53,7 +57,23 @@ class Admin::BudgetInvestmentMilestonesController < Admin::BaseController
   end
 
   def load_budget_investment_milestone
-    @milestone = Budget::Investment::Milestone.find(params[:id])
+    @milestone = get_milestone
+  end
+
+  def get_milestone
+    Budget::Investment::Milestone.find(params[:id])
+  end
+
+  def resource_model
+    Budget::Investment::Milestone
+  end
+
+  def resource
+    get_milestone
+  end
+
+  def load_statuses
+    @statuses = Budget::Investment::Status.all
   end
 
 end

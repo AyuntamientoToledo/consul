@@ -38,6 +38,13 @@ namespace :admin do
     get :summary, on: :collection
   end
 
+  resources :proposal_notifications, only: :index do
+    member do
+      put :restore
+      put :confirm_hide
+    end
+  end
+
   resources :budgets do
     member do
       put :calculate_winners
@@ -54,6 +61,8 @@ namespace :admin do
 
     resources :budget_phases, only: [:edit, :update]
   end
+
+  resources :budget_investment_statuses, only: [:index, :new, :create, :update, :edit, :destroy]
 
   resources :signature_sheets, only: [:index, :new, :create, :show]
 
@@ -80,10 +89,11 @@ namespace :admin do
     get :search, on: :collection
   end
 
-  resources :valuators, only: [:index, :create, :destroy] do
+  resources :valuators, only: [:show, :index, :edit, :update, :create, :destroy] do
     get :search, on: :collection
     get :summary, on: :collection
   end
+  resources :valuator_groups
 
   resources :managers, only: [:index, :create, :destroy] do
     get :search, on: :collection
@@ -142,8 +152,15 @@ namespace :admin do
 
   resource :activity, controller: :activity, only: :show
 
-  resources :newsletters, only: :index do
+  resources :newsletters do
+    member do
+      post :deliver
+    end
     get :users, on: :collection
+  end
+
+  resources :emails_download, only: :index do
+    get :generate_csv, on: :collection
   end
 
   resource :stats, only: :show do
@@ -170,5 +187,12 @@ namespace :admin do
     resources :pages, except: [:show]
     resources :images, only: [:index, :update, :destroy]
     resources :content_blocks, except: [:show]
+  end
+
+  resource :homepage, controller: :homepage, only: [:show]
+
+  namespace :widget do
+    resources :cards
+    resources :feeds, only: [:update]
   end
 end
