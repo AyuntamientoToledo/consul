@@ -44,7 +44,6 @@ namespace :deploy do
 #  before :starting, 'rvm1:install:rvm'  # install/update RVM
 #  before :starting, 'rvm1:install:ruby' # install Ruby and create gemset
 #  before :starting, 'install_bundler_gem' # install bundler gem
-
   after :publishing, 'deploy:restart_toledo_participa_service'
   after :publishing, 'deploy:restart_toledo_participa_jobs_queue_service'
   after :published, 'refresh_sitemap'
