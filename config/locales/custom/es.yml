@@ -6,6 +6,8 @@ es:
       open_city_slogan_html: Existen ciudades gobernadas directamente por sus habitantes, en las que la ciudadanía puede <strong>proponer, debatir y decidir</strong> sobre los asuntos que les importan. Con sus ideas contribuyen a mejorar sus vidas y las de los demás. <strong>Toledo ya es una de ellas</strong>.
       collaborative_legislation: Procesos
     footer:
+      transparency_title: 'Transparencia'
+      transparency_text: 'Obtén cualquier información sobre la ciudad.'
       consul: 'ToledoParticipa'
       consul_url: 'https://github.com/consul/consul'
       copyright: 'Ayuntamiento de Toledo, %{year}'
