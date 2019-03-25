@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="row margin">
+<div class="row margin hide">
   <div class="small-12 medium-9 column">
     <% if @current_filter == "unfeasible" %>
       <h3 class="margin-bottom"><%= t("budgets.show.unfeasible_title") %></h3>
@@ -103,3 +103,5 @@
     </div>
   <% end %>
 <% end %>
+
+<%= render 'budgets/budget_details', budget: @budget %>
