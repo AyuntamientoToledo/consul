@@ -26,8 +26,7 @@ class ToledoCensusApi < CensusApi
     end
 
     def valid?
-
-      @census_response['error'].nil?
+      @census_response['error'].nil? && @census_response[:error].nil? && @census_response[:status_code] == 200
     end
 
     def gender
@@ -68,7 +67,8 @@ class ToledoCensusApi < CensusApi
 
         @parsed_to_json = JSON.parse(response)
         @census_response = @parsed_to_json.kind_of?(Array)? @parsed_to_json[0] : @parsed_to_json
-
+        @census_response[:status_code] = response.code
+        
       rescue Exception => ex
 
         @logger.error "[#{document_number}] Response #{ex.http_code}: #{ex.http_body}"
