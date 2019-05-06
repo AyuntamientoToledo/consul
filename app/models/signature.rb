@@ -69,7 +69,9 @@ class Signature < ActiveRecord::Base
 
   def in_census?
     document_types.detect do |document_type|
-      response = CensusCaller.new.call(document_type, document_number)
+      # In order of residence verification during signature sheets validation we have to override this line. 
+      # Delayed job is not ovewriting the class definition with our defined custom class
+      response = ToledoCensusCaller.new.call(document_type, document_number)
       if response.valid?
         @census_api_response = response
         true
