@@ -5,6 +5,8 @@ module Abilities
     def initialize(user)
       merge Abilities::Moderation.new(user)
 
+      can [:read_results, :read_executions], Budget #TOL-1405-2 Allow admin to see results before changing budget phase to finished
+      
       can :restore, Comment
       cannot :restore, Comment, hidden_at: nil
 
