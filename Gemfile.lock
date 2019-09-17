@@ -556,7 +556,7 @@ DEPENDENCIES
   foundation_rails_helper (~> 2.0.0)
   globalize (~> 5.0.0)
   globalize-accessors (~> 0.2.1)
-  graphiql-rails (~> 1.4.1)
+  graphiql-rails (~> 1.4.8)
   graphql (~> 1.7.8)
   groupdate (~> 3.2.0)
   i18n-tasks (~> 0.9.25)

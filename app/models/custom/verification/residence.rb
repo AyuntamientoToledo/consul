@@ -30,7 +30,7 @@ class Verification::Residence
   def save
     return false unless valid?
 
-    user.take_votes_if_erased_document(document_number, document_type)
+    user.take_votes_if_erased_document(normalized_document_number, document_type)
 
     user.update(document_number:       normalized_document_number,
                 document_type:         document_type,

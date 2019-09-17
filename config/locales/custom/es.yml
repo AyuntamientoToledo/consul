@@ -1,4 +1,8 @@
 es:
+  budgets:
+    index:
+      see: 'Ver proceso'
+      open_budgets: 'Presupuestos participativos activos'
   layouts:
     header:
       external_link_transparency: Transparencia

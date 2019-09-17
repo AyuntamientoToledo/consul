@@ -1,0 +1,50 @@
+<% if budgets.present? %>
+  <div class="row margin-top">
+    <div class="small-12 medium-9 column">
+      <ul class="no-bullet submenu">
+        <li class="inline-block">
+          <%= link_to "#other_budgets", class: "is-active" do %>
+            <h2>
+							<%= block_title %>
+            </h2>
+          <% end %>
+        </li>
+      </ul>
+
+      <div id="finished_budgets" class="budget-investments-list">
+        <%  budgets.each do |budget| %>
+          <div class="budget-investment clear">
+            <div class="panel past-budgets">
+              <div class="row" data-equalizer data-equalizer-on="medium">
+                <div class="small-12 medium-6 column table" data-equalizer-watch>
+                  <div class="table-cell align-middle">
+                    <h3><%= link_to budget.name, budget %></h3>
+										<small class="text-muted"><%= t("budgets.phase.#{budget.phase}")%></small>
+                  </div>
+                </div>
+
+                <div class="small-12 medium-6 column table" data-equalizer-watch>
+                  <div id="budget_<%= budget.id %>_results" class="table-cell align-middle">
+										<% if budget.finished? %>
+	                    <%= link_to t("budgets.index.see_results"),
+	                                budget_results_path(budget.id),
+	                                class: "button" %>
+	                    <%= link_to t("budgets.index.milestones"),
+	                                budget_executions_path(budget.id),
+	                                class: "button" %>
+										<% else %>
+	                    <%= link_to t("budgets.index.see"),
+	                                budget_path(budget.id),
+	                                class: "button expanded" %>
+										<% end %>
+										
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
