@@ -29,9 +29,17 @@
 
 # Mac finder artifacts
 .DS_Store
+
+# Intellij IDE project settings
+/.idea
+
 .ruby-gemset
 
 public/sitemap.xml
 public/system/
+<<<<<<< HEAD
 .idea/
 /public/ckeditor_assets/
+=======
+/public/ckeditor_assets/
+>>>>>>> 1.0.0
